@@ -37,7 +37,6 @@ add to your auth.php:
 
 ## usage
 
-get the ticket first
 ```php
 $client = new Client();
 
