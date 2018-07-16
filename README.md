@@ -43,13 +43,19 @@ this command will create a table name sso to authorize.
 ## usage
 
 ```php
-$client = new Client();
+// sso client system
+Route::get('sso', function () {
+    $client = new \GuzzleHttp\Client();
+    
+    $response = $client->get('http://yourdomain/sso/getTicket?'.http_build_query([
+        'app_id' => 'your_app_id',
+        'secret' => 'your_secret',
+    ]));
 
-$response = $client->get('http://yourdomain/sso/getTicket?app_id=your_app_id&secret=your_secret');
+    $result = json_decode((string)$response->getBody(), true);
 
-$result = json_decode((string)$response->getBody(), true);
-
-if ($ticket = $result['ticket'] ?? null) {
-    redirect(''http://yourdomain/sso/login?ticket='.$ticket);
-}
+    if ($ticket = $result['ticket'] ?? null) {
+        return redirect('http://yourdomain/sso/login?ticket='.$ticket);
+    }
+});
 ``` 
