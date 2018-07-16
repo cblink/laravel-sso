@@ -2,4 +2,5 @@
 
 return [
     'table' => 'sso',
+    'guard' => 'sso',
 ];

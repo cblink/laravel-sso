@@ -1,2 +1,3 @@
+
 Route::get('sso/getTicket', '\Cblink\Sso\Http\Controllers\SsoController@getTicket');
 Route::get('sso/login', '\Cblink\Sso\Http\Controllers\SsoController@login');

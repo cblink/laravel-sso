@@ -5,10 +5,10 @@ namespace Cblink\Sso;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\DatabaseUserProvider;
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
-class SsoUserProvider extends EloquentUserProvider
+class SsoUserProvider extends DatabaseUserProvider
 {
     public function retrieveByCredentials(array $credentials)
     {
@@ -18,10 +18,12 @@ class SsoUserProvider extends EloquentUserProvider
             abort(401, 'invalid ticket');
         }
 
-        return DB::table('sso.table')->where('app_id', $appId)->first();
+        $user = DB::table(config('sso.table'))->where('app_id', $appId)->first();
+
+        return $this->getGenericUser($user);
     }
 
-    public function validateCredentials(Authenticatable $user, array $credentials)
+    public function validateCredentials(UserContract $user, array $credentials)
     {
         return  Cache::pull($credentials['ticket']);
     }

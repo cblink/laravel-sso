@@ -4,12 +4,13 @@
 namespace Cblink\Sso\Http\Controllers;
 
 
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class SsoController extends Controller
 {
@@ -50,5 +51,10 @@ class SsoController extends Controller
     protected function credentials(Request $request)
     {
         return $request->only('ticket');
+    }
+
+    protected function guard()
+    {
+        return Auth::guard(config('sso.guard', 'web'));
     }
 }

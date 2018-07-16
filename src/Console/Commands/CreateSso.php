@@ -44,7 +44,7 @@ class CreateSso extends Command
 
         $secret = md5($appId.time());
 
-        DB::table('sso.table')->insert([
+        DB::table(config('sso.table'))->insert([
             'name' => $name,
             'app_id' => $appId,
             'secret' => $secret
