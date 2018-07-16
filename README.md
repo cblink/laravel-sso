@@ -6,25 +6,25 @@
 
 ## configure
 
-publish config.php and migration
+### publish config.php and migration
 
 `php artisan vendor:publish --provider="Cblink\Sso\SsoServiceProvider"`
 
-migrate:
+### migrate:
 
 `php artisan migrate`
 
 this command will create a table name sso to authorize.
 
-create sso route:
+### create sso route:
 
 `php artisan sso:route`
 
-also you can create sso through command
+### also you can create sso through command
 
 `php artisan sso:create`
 
-add to your auth.php:
+### add to your auth.php:
 ```php
 'guards' => [
     'sso' => [
