@@ -1,0 +1,26 @@
+{
+    "name": "cblink/laravel-sso",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hanson",
+            "email": "h@hanc.cc"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cblink\\Sso\\": "src/"
+        }
+    },
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cblink\\Sso\\SsoServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "laravel/framework": "^5.6"
+    }
+}
