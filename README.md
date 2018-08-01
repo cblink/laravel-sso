@@ -2,7 +2,7 @@
 
 ## install
 
-`composer require cblink/laravel-sso:dev-master -vvv`
+`composer require cblink/laravel-sso -vvv`
 
 ## configure
 
