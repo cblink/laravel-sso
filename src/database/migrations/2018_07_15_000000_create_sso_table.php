@@ -18,6 +18,7 @@ class CreateSsoTable extends Migration
             $table->string('name')->comment('application name');
             $table->string('app_id')->unique();
             $table->string('secret');
+            $table->string('remember_token')->nullable();
             $table->timestamps();
         });
     }
