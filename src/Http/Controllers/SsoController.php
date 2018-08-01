@@ -33,7 +33,6 @@ class SsoController extends Controller
             $ticket = str_random(64);
 
             Cache::put($ticket, $appId, 5);
-            logger(Cache::get($ticket));
 
             return ['ticket' => $ticket];
         } else {
