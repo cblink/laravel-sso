@@ -42,6 +42,8 @@ this command will create a table name sso to authorize.
 
 ## usage
 
+### Get ticket in client
+
 ```php
 // sso client system
 Route::get('sso', function () {
@@ -58,4 +60,36 @@ Route::get('sso', function () {
         return redirect('http://yourdomain/sso/login?ticket='.$ticket);
     }
 });
-``` 
+```
+
+### Redirect to any url
+
+add middleware to `Http/kernel.php`
+
+```php
+
+protected $routeMiddleware = [
+    // ...
+    'ticket' => \Cblink\Sso\Http\Middleware\LoginWithTicket::class,
+];
+
+// declare route priority
+protected $middlewarePriority = [
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \Cblink\Sso\Http\Middleware\LoginWithTicket::class,
+    \Illuminate\Auth\Middleware\Authenticate::class,
+    \Illuminate\Session\Middleware\AuthenticateSession::class,
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    \Illuminate\Auth\Middleware\Authorize::class,
+];
+```
+
+in web.php , add `ticket` before `auth`：
+```php
+Route::group(['middleware' => ['ticket', 'auth'], function () {
+    // ...
+});
+```
+
+add to `Http/kernel.php`
