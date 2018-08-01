@@ -91,5 +91,3 @@ Route::group(['middleware' => ['ticket', 'auth'], function () {
     // ...
 });
 ```
-
-add to `Http/kernel.php`
