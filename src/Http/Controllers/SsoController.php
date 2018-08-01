@@ -32,7 +32,7 @@ class SsoController extends Controller
         ])->exists()) {
             $ticket = str_random(64);
 
-            Cache::put($ticket, $appId, 5);
+            Cache::put(config('sso.cache_prefix') . $ticket, $appId, 5);
 
             return ['ticket' => $ticket];
         } else {

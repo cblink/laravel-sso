@@ -12,7 +12,7 @@ class SsoUserProvider extends DatabaseUserProvider
 {
     public function retrieveByCredentials(array $credentials)
     {
-        $appId = Cache::get($credentials['ticket']);
+        $appId = Cache::get(config('sso.cache_prefix') . $credentials['ticket']);
 
         if (!$appId) {
             abort(401, 'invalid ticket');
