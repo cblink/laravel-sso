@@ -15,6 +15,7 @@ class CreateSsoTable extends Migration
     {
         Schema::create('sso', function (Blueprint $table) {
             $table->increments('id');
+            // $table->unsignedInteger('user_id')->index(); support specific user login in as sso
             $table->string('name')->comment('application name');
             $table->string('app_id')->unique();
             $table->string('secret');
