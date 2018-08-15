@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Auth\DatabaseUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
+/**
+ * Class SsoUserProvider
+ *
+ * @package Cblink\Sso
+ */
 class SsoUserProvider extends DatabaseUserProvider
 {
     /**
@@ -23,31 +28,19 @@ class SsoUserProvider extends DatabaseUserProvider
             abort(401, 'invalid ticket');
         }
 
-        $sso = DB::table(config('sso.table'))->where('app_id', $appId)->first();
-
-        $user = $this->getUser($sso);
+        $user = DB::table(config('sso.table'))->where('app_id', $appId)->first();
 
         return $this->getGenericUser($user);
     }
 
+    /**
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array                                      $credentials
+     *
+     * @return mixed
+     */
     public function validateCredentials(UserContract $user, array $credentials)
     {
         return  Cache::pull(config('sso.cache_prefix') . $credentials['ticket']);
-    }
-
-    /**
-     * @param $sso
-     * @return mixed
-     * @throws SsoException
-     */
-    protected function getUser($sso)
-    {
-        $callback = config('sso.get_user_by_sso');
-
-        if ($callback instanceof \Closure) {
-            return $callback($sso) ?: $sso;
-        } else {
-            throw new SsoException('config sso.get_user_by_sso is not callable');
-        }
     }
 }
