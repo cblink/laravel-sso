@@ -56,4 +56,9 @@ class SsoController extends Controller
     {
         return Auth::guard(config('sso.guard', 'web'));
     }
+
+    public function redirectTo()
+    {
+        return config('sso.redirect', $this->redirectTo);
+    }
 }
